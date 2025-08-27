@@ -77,7 +77,7 @@ body::before {
         radial-gradient(circle at 80% 80%, var(--bg-gradient-2) 0%, transparent 50%),
         radial-gradient(circle at 60% 20%, var(--bg-gradient-3) 0%, transparent 50%);
     pointer-events: none;
-    z-index: 0;
+    z-index: -5;
     animation: backgroundShift 15s ease-in-out infinite;
 }
 
@@ -103,7 +103,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -10;
     pointer-events: none;
 }
 
@@ -124,10 +124,43 @@ body::before {
     font-weight: 700;
     font-size: 1.5rem;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--light-blue), var(--accent-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    box-shadow: 0 4px 15px var(--shadow-blue-hover);
+    transition: all 0.3s ease;
+}
+
+.brand-text {
+    color: var(--light-blue);
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 
 .navbar-brand:hover {
     color: var(--text-light) !important;
+}
+
+.navbar-brand:hover .brand-icon {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--shadow-blue-strong);
+}
+
+.navbar-brand:hover .brand-text {
+    color: var(--text-light);
 }
 
 .navbar-nav .nav-link {
@@ -212,7 +245,7 @@ body::before {
     padding: 100px 0 50px;
     display: block;
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 @keyframes fadeIn {
@@ -490,6 +523,29 @@ body::before {
     font-weight: 500;
 }
 
+.proficiency-segments {
+    display: flex;
+    gap: 3px;
+    margin-left: 15px;
+}
+
+.segment {
+    width: 8px;
+    height: 8px;
+    background: var(--hover-bg);
+    border-radius: 50%;
+    transition: all 0.6s ease-in-out;
+    border: 1px solid var(--border-color);
+}
+
+.segment.filled {
+    background: linear-gradient(135deg, var(--dark-blue), var(--accent-blue));
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 8px var(--shadow-blue-hover);
+    transform: scale(1.1);
+}
+
+/* Legacy progress bar styling for backward compatibility */
 .proficiency-bar {
     width: 60px;
     height: 6px;
@@ -693,12 +749,41 @@ footer a:hover {
     color: var(--light-blue) !important;
 }
 
+.footer-title:hover .footer-brand-icon {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--shadow-blue-strong);
+}
+
+.footer-title:hover .footer-brand-text {
+    color: var(--text-light);
+}
+
 /* Scroll-based navigation adjustments */
 html {
     scroll-behavior: smooth;
 }
 
 /* Mobile and Tablet Responsive Design */
+
+/* Large screens - position hero image between top and middle */
+@media (min-width: 1200px) {
+    .hero-image {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+    }
+    
+    .hero-avatar {
+        margin: 0 auto;
+    }
+    
+    #home .col-lg-6.order-1.order-lg-2 {
+        position: relative;
+        height: 100vh;
+    }
+}
 
 /* Large tablets and small desktops */
 @media (max-width: 1199.98px) {
@@ -750,17 +835,17 @@ html {
     /* Tablet layout - image first */
     #home .row.align-items-center {
         display: flex !important;
-        flex-direction: column-reverse !important;
+        flex-direction: column !important;
     }
     
-    #home .col-lg-6:first-child {
-        order: 2 !important;
+    /* Hero content (text) comes second on tablet */
+    #home .col-lg-6.order-2 {
         margin-top: 40px;
         text-align: center;
     }
     
-    #home .col-lg-6:last-child {
-        order: 1 !important;
+    /* Hero image comes first on tablet */
+    #home .col-lg-6.order-1 {
         text-align: center;
     }
     
@@ -793,7 +878,7 @@ html {
     /* Force mobile layout */
     #home .row.align-items-center {
         display: flex !important;
-        flex-direction: column-reverse !important;
+        flex-direction: column !important;
         align-items: center !important;
     }
     
@@ -803,14 +888,14 @@ html {
         width: 100% !important;
     }
     
-    #home .col-lg-6:first-child {
-        order: 2 !important;
+    /* Hero content (text) comes second on mobile */
+    #home .col-lg-6.order-2 {
         margin-top: 30px !important;
         padding-top: 20px;
     }
     
-    #home .col-lg-6:last-child {
-        order: 1 !important;
+    /* Hero image comes first on mobile */
+    #home .col-lg-6.order-1 {
         margin-bottom: 0 !important;
     }
     
@@ -881,6 +966,28 @@ html {
     
     .navbar-brand {
         font-size: 1.3rem;
+        gap: 10px;
+    }
+    
+    .brand-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .brand-text {
+        font-size: 1.3rem;
+    }
+    
+    /* Mobile Footer Brand */
+    .footer-brand-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .footer-brand-text {
+        font-size: 1.2rem;
     }
     
     /* Mobile Buttons */
@@ -1004,6 +1111,27 @@ html {
         height: 40px;
         font-size: 1.1rem;
     }
+    
+    .brand-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    .brand-text {
+        font-size: 1.2rem;
+    }
+    
+    /* Small Mobile Footer Brand */
+    .footer-brand-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .footer-brand-text {
+        font-size: 1.1rem;
+    }
 }
 
 /* Floating Animation */
@@ -1072,6 +1200,30 @@ html {
 .footer-title {
     color: var(--light-blue);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-brand-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--light-blue), var(--accent-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    box-shadow: 0 4px 15px var(--shadow-blue-hover);
+    transition: all 0.3s ease;
+}
+
+.footer-brand-text {
+    color: var(--light-blue);
+    font-weight: 700;
+    font-size: 1.25rem;
 }
 
 .footer-text {

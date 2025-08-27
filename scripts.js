@@ -125,7 +125,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Animate proficiency bars
+                // Animate proficiency segments (new system)
+                const toolCards = entry.target.querySelectorAll('.tool-card');
+                toolCards.forEach((card, cardIndex) => {
+                    const level = parseInt(card.getAttribute('data-level'));
+                    const segments = card.querySelectorAll('.segment');
+                    
+                    // Animate segments based on level
+                    segments.forEach((segment, segmentIndex) => {
+                        setTimeout(() => {
+                            if (segmentIndex < level) {
+                                segment.classList.add('filled');
+                            }
+                        }, 200 + (cardIndex * 200) + (segmentIndex * 150));
+                    });
+                });
+
+                // Legacy proficiency bars (for backward compatibility)
                 const proficiencyBars = entry.target.querySelectorAll('.proficiency-fill');
                 proficiencyBars.forEach((bar, index) => {
                     const width = bar.getAttribute('data-width') + '%';
@@ -187,53 +203,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add dynamic particle bursts
-    function createParticleBurst() {
-        setInterval(() => {
-            const burst = document.createElement('div');
-            burst.style.position = 'fixed';
-            burst.style.left = Math.random() * 100 + '%';
-            burst.style.top = Math.random() * 100 + '%';
-            burst.style.width = '3px';
-            burst.style.height = '3px';
-            burst.style.background = `hsl(${Math.random() * 60 + 200}, 70%, 60%)`;
-            burst.style.borderRadius = '50%';
-            burst.style.pointerEvents = 'none';
-            burst.style.zIndex = '1';
-            burst.style.animation = 'burstFade 1.5s ease-out forwards';
-            burst.style.boxShadow = `0 0 10px currentColor`;
-            
-            document.body.appendChild(burst);
-            
-            setTimeout(() => {
-                burst.remove();
-            }, 1500);
-        }, 2000);
-    }
 
-    // Add burst animation
-    const burstStyle = document.createElement('style');
-    burstStyle.textContent = `
-        @keyframes burstFade {
-            0% {
-                transform: scale(0) rotate(0deg);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(4) rotate(180deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(0) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(burstStyle);
 
     // Initialize effects
     addHeroGlow();
-    setTimeout(createParticleBurst, 2000);
 
     // Initialize tooltips if using Bootstrap tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -308,12 +281,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 detect_on: "canvas",
                 events: {
                     onhover: {
-                        enable: true,
-                        mode: "repulse" // MKBHD-style repulsion effect
+                        enable: false
                     },
                     onclick: {
-                        enable: true,
-                        mode: "push"
+                        enable: false
                     },
                     resize: true
                 },
@@ -350,43 +321,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add custom cursor effect for additional interactivity
-document.addEventListener('mousemove', function(e) {
-    // Create cursor trail effect
-    if (Math.random() < 0.1) { // Only create trail 10% of the time for performance
-        const trail = document.createElement('div');
-        trail.style.position = 'fixed';
-        trail.style.left = e.clientX + 'px';
-        trail.style.top = e.clientY + 'px';
-        trail.style.width = '4px';
-        trail.style.height = '4px';
-        trail.style.background = '#63b3ed';
-        trail.style.borderRadius = '50%';
-        trail.style.pointerEvents = 'none';
-        trail.style.zIndex = '999';
-        trail.style.opacity = '0.6';
-        trail.style.animation = 'cursorTrail 0.8s ease-out forwards';
-        
-        document.body.appendChild(trail);
-        
-        setTimeout(() => {
-            trail.remove();
-        }, 800);
-    }
-});
 
-// Add cursor trail animation
-const trailStyle = document.createElement('style');
-trailStyle.textContent = `
-    @keyframes cursorTrail {
-        0% {
-            transform: scale(1);
-            opacity: 0.6;
-        }
-        100% {
-            transform: scale(0);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(trailStyle);

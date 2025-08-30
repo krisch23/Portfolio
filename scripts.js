@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add typing effect to hero title
     function typeWriter() {
-        const text = "Business Data Analyst";
+        const text = "Data Analytics & Business Intelligence Professional";
         const speed = 100;
         let i = 0;
         const element = document.querySelector('.hero-subtitle');
@@ -219,10 +219,10 @@ document.addEventListener('DOMContentLoaded', function() {
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 60,
+                    value: 85,
                     density: {
                         enable: true,
-                        value_area: 1000
+                        value_area: 900
                     }
                 },
                 color: {
@@ -236,12 +236,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 },
                 opacity: {
-                    value: 0.4,
+                    value: 0.45,
                     random: true,
                     anim: {
                         enable: true,
                         speed: 0.8,
-                        opacity_min: 0.1,
+                        opacity_min: 0.15,
                         sync: false
                     }
                 },
@@ -257,10 +257,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 line_linked: {
                     enable: true,
-                    distance: 120,
+                    distance: 135,
                     color: "#3182ce",
-                    opacity: 0.2,
-                    width: 1
+                    opacity: 0.25,
+                    width: 1.2
                 },
                 move: {
                     enable: true,
@@ -290,9 +290,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 modes: {
                     grab: {
-                        distance: 140,
+                        distance: 180,
                         line_linked: {
-                            opacity: 0.5
+                            opacity: 0.6
                         }
                     },
                     bubble: {

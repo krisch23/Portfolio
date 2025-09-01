@@ -1,5 +1,17 @@
-// Navigation and Section Management
+// Single-page scrolling navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize particles background
+    initializeParticles();
+    
+    // Initialize single-page functionality
+    initializeSinglePageNavigation();
+    
+    // Initialize common functionality
+    initializeCommonFeatures();
+});
+
+// Initialize single-page navigation with smooth scrolling
+function initializeSinglePageNavigation() {
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -39,27 +51,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Listen for scroll events
-    window.addEventListener('scroll', updateActiveNavLink);
-    
-    // Initialize active link on page load
-    updateActiveNavLink();
-
-    // Navbar scroll effect
+    // Combined scroll event handler for navbar effects and active link updates
     window.addEventListener('scroll', function() {
+        // Update navbar background on scroll
         const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
+        if (navbar && window.scrollY > 50) {
             navbar.style.background = 'var(--navbar-bg-scroll)';
             navbar.style.boxShadow = '0 4px 30px var(--shadow-medium)';
-        } else {
+        } else if (navbar) {
             navbar.style.background = 'var(--navbar-bg)';
             navbar.style.boxShadow = '0 2px 20px var(--shadow-medium)';
         }
         
-        // Update active nav link
+        // Update active navigation link
         updateActiveNavLink();
     });
+    
+    // Initialize active link on page load
+    updateActiveNavLink();
+}
 
+// Initialize common features
+function initializeCommonFeatures() {
+    // Initialize page-specific features
+    initializePageSpecificFeatures();
+    
+    // Initialize tooltips if available
+    initializeTooltips();
+}
+
+// Initialize page-specific features for single-page website
+function initializePageSpecificFeatures() {
+    // Since we now have a single-page website, initialize all features
+    initializeHomePage();
+    initializeSkillsPage();
+    initializeContactPage();
+}
+
+// Home page initialization
+function initializeHomePage() {
     // Counter Animation for Hero Stats
     function animateCounters() {
         const counters = document.querySelectorAll('.hero-stats .stat-number');
@@ -84,6 +114,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Start counter animation when page loads
     setTimeout(animateCounters, 1000);
+    
+    // Add typing effect to hero title
+    setTimeout(typeWriter, 500);
+    
+    // Add dynamic glow effect to hero avatar
+    addHeroGlow();
+}
+
+// Skills page initialization
+function initializeSkillsPage() {
+    // Animate skill proficiency segments
+    const observerOptions = {
+        threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const toolCards = entry.target.querySelectorAll('.tool-card');
+                toolCards.forEach((card, cardIndex) => {
+                    const level = parseInt(card.getAttribute('data-level'));
+                    const segments = card.querySelectorAll('.segment');
+                    
+                    segments.forEach((segment, segmentIndex) => {
+                        setTimeout(() => {
+                            if (segmentIndex < level) {
+                                segment.classList.add('filled');
+                            }
+                        }, 200 + (cardIndex * 200) + (segmentIndex * 150));
+                    });
+                });
+            }
+        });
+    }, observerOptions);
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        observer.observe(skillsSection);
+    }
+}
+
+// Contact page initialization
+function initializeContactPage() {
 
     // Contact Form Handler
     const contactForm = document.getElementById('contactForm');
@@ -99,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
             button.disabled = true;
             
-            // Simulate form submission
+            // Simulate form submission (replace with actual form handling)
             setTimeout(() => {
                 button.innerHTML = '<i class="bi bi-check-circle-fill"></i> Message Sent!';
                 button.classList.remove('btn-primary-custom');
@@ -116,105 +189,63 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1500);
         });
     }
+}
 
-    // Animate skill proficiency bars
-    const observerOptions = {
-        threshold: 0.3
-    };
+// Utility Functions
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Animate proficiency segments (new system)
-                const toolCards = entry.target.querySelectorAll('.tool-card');
-                toolCards.forEach((card, cardIndex) => {
-                    const level = parseInt(card.getAttribute('data-level'));
-                    const segments = card.querySelectorAll('.segment');
-                    
-                    // Animate segments based on level
-                    segments.forEach((segment, segmentIndex) => {
-                        setTimeout(() => {
-                            if (segmentIndex < level) {
-                                segment.classList.add('filled');
-                            }
-                        }, 200 + (cardIndex * 200) + (segmentIndex * 150));
-                    });
-                });
-
-                // Legacy proficiency bars (for backward compatibility)
-                const proficiencyBars = entry.target.querySelectorAll('.proficiency-fill');
-                proficiencyBars.forEach((bar, index) => {
-                    const width = bar.getAttribute('data-width') + '%';
-                    setTimeout(() => {
-                        bar.style.width = width;
-                    }, 300 + (index * 100));
-                });
-            }
-        });
-    }, observerOptions);
-
-    // Observe skills section
-    const skillsSection = document.getElementById('skills');
-    if (skillsSection) {
-        observer.observe(skillsSection);
-    }
-
-    // Add typing effect to hero title
-    function typeWriter() {
-        const text = "Data Analytics & Business Intelligence Professional";
-        const speed = 100;
-        let i = 0;
-        const element = document.querySelector('.hero-subtitle');
+// Add typing effect to hero title
+function typeWriter() {
+    const text = "Data Analytics & Business Intelligence Professional";
+    const speed = 100;
+    let i = 0;
+    const element = document.querySelector('.hero-subtitle');
+    
+    if (element && !element.style.color) {
+        element.innerHTML = '';
         
-        if (element && !element.style.color) {
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
             }
-            
-            type();
         }
+        
+        type();
     }
+}
 
-    // Start typing effect when page loads
-    setTimeout(typeWriter, 500);
-
-    // Add dynamic glow effect to hero avatar
-    function addHeroGlow() {
-        const heroAvatar = document.querySelector('.hero-avatar');
-        if (heroAvatar) {
-            const glowColors = [
-                '0 20px 40px rgba(49, 130, 206, 0.4), 0 0 60px rgba(49, 130, 206, 0.2)',
-                '0 20px 40px rgba(99, 179, 237, 0.4), 0 0 60px rgba(99, 179, 237, 0.2)',
-                '0 20px 40px rgba(44, 82, 130, 0.5), 0 0 60px rgba(44, 82, 130, 0.2)',
-                '0 20px 40px rgba(56, 161, 105, 0.4), 0 0 60px rgba(56, 161, 105, 0.2)'
-            ];
-            
-            let colorIndex = 0;
-            setInterval(() => {
-                heroAvatar.style.boxShadow = glowColors[colorIndex];
-                colorIndex = (colorIndex + 1) % glowColors.length;
-            }, 2500);
-        }
+// Add dynamic glow effect to hero avatar
+function addHeroGlow() {
+    const heroAvatar = document.querySelector('.hero-avatar');
+    if (heroAvatar) {
+        const glowColors = [
+            '0 20px 40px rgba(49, 130, 206, 0.4), 0 0 60px rgba(49, 130, 206, 0.2)',
+            '0 20px 40px rgba(99, 179, 237, 0.4), 0 0 60px rgba(99, 179, 237, 0.2)',
+            '0 20px 40px rgba(44, 82, 130, 0.5), 0 0 60px rgba(44, 82, 130, 0.2)',
+            '0 20px 40px rgba(56, 161, 105, 0.4), 0 0 60px rgba(56, 161, 105, 0.2)'
+        ];
+        
+        let colorIndex = 0;
+        setInterval(() => {
+            heroAvatar.style.boxShadow = glowColors[colorIndex];
+            colorIndex = (colorIndex + 1) % glowColors.length;
+        }, 2500);
     }
+}
 
+// Initialize tooltips
+function initializeTooltips() {
+    if (typeof bootstrap !== 'undefined') {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+}
 
-
-    // Initialize effects
-    addHeroGlow();
-
-    // Initialize tooltips if using Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-
-    // Initialize Particles.js with MKBHD-style interaction
+// Initialize Particles.js background
+function initializeParticles() {
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
             particles: {
@@ -264,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 move: {
                     enable: true,
-                    speed: 0.8, // Reduced speed for slower movement
+                    speed: 0.8,
                     direction: "none",
                     random: true,
                     straight: false,
@@ -303,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         speed: 3
                     },
                     repulse: {
-                        distance: 120, // Distance at which particles are repulsed
+                        distance: 120,
                         duration: 0.4
                     },
                     push: {
@@ -319,6 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn('Particles.js not loaded. Make sure to include the particles.js library.');
     }
-});
+}
 
 

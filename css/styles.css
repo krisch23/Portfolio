@@ -248,6 +248,17 @@ body::before {
     z-index: 10;
 }
 
+/* Page-specific section adjustments */
+body:not([data-page="home"]) .section {
+    min-height: auto;
+    padding: 120px 0 50px;
+}
+
+/* Optimize rendering for multi-page */
+.section {
+    contain: layout style;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -1307,4 +1318,57 @@ html {
 
 .hero-description {
     color: var(--text-gray);
+}
+
+/* Performance Optimizations */
+.card-custom, .project-card, .tool-card {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero-avatar {
+        animation: none !important;
+    }
+    
+    .segment {
+        transition: none !important;
+    }
+}
+
+/* Focus indicators for better accessibility */
+a:focus,
+button:focus,
+.btn:focus,
+.form-control:focus,
+.form-select:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent-blue);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 9999;
+}
+
+.skip-to-main:focus {
+    top: 6px;
 }

@@ -195,7 +195,7 @@ function initializeContactPage() {
 
 // Add typing effect to hero title
 function typeWriter() {
-    const text = "Data Analytics & Business Intelligence Professional";
+    const text = "Business Analytics Professional";
     const speed = 100;
     let i = 0;
     const element = document.querySelector('.hero-subtitle');

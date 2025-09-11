@@ -15,6 +15,12 @@ function initializeSinglePageNavigation() {
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                // Remove focus after click to eliminate persistent focus outline
+                // Use setTimeout to ensure smooth scroll starts before blur
+                setTimeout(() => {
+                    this.blur();
+                }, 100);
             }
         });
     });
@@ -161,10 +167,10 @@ function addHeroGlow() {
     const heroAvatar = document.querySelector('.hero-avatar');
     if (heroAvatar) {
         const glowColors = [
-            '0 20px 40px rgba(49, 130, 206, 0.4), 0 0 60px rgba(49, 130, 206, 0.2)',
-            '0 20px 40px rgba(99, 179, 237, 0.4), 0 0 60px rgba(99, 179, 237, 0.2)',
-            '0 20px 40px rgba(44, 82, 130, 0.5), 0 0 60px rgba(44, 82, 130, 0.2)',
-            '0 20px 40px rgba(56, 161, 105, 0.4), 0 0 60px rgba(56, 161, 105, 0.2)'
+            '0 20px 40px rgba(99, 179, 237, 0.4), 0 0 60px rgba(99, 179, 237, 0.2)',  // Light blue
+            '0 20px 40px rgba(49, 130, 206, 0.4), 0 0 60px rgba(49, 130, 206, 0.2)',  // Blue
+            '0 20px 40px rgba(44, 82, 130, 0.5), 0 0 60px rgba(44, 82, 130, 0.2)',   // Dark blue
+            '0 20px 40px rgba(49, 130, 206, 0.4), 0 0 60px rgba(49, 130, 206, 0.2)'   // Back to blue for smooth transition
         ];
         
         let colorIndex = 0;

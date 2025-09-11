@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://krisch23.github.io/sitemap.xml

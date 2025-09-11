@@ -241,23 +241,17 @@ body::before {
 
 /* Sections */
 .section {
-    min-height: 100vh;
-    padding: 100px 0 50px;
+    padding: 80px 0 80px;
     display: block;
     position: relative;
     z-index: 10;
 }
 
-/* Page-specific section adjustments */
-body:not([data-page="home"]) .section {
-    min-height: auto;
-    padding: 120px 0 50px;
+/* Home section - consistent with other sections */
+#home.section {
+    padding: 80px 0 80px;
 }
 
-/* Optimize rendering for multi-page */
-.section {
-    contain: layout style;
-}
 
 @keyframes fadeIn {
     from {
@@ -466,6 +460,50 @@ body:not([data-page="home"]) .section {
     box-shadow: 0 15px 40px var(--shadow-blue);
 }
 
+/* Simple Skill Cards */
+.skill-card-simple {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 15px;
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    width: 140px;
+    height: 120px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-icon-simple {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    box-shadow: 0 4px 12px var(--shadow-light);
+    padding: 5px;
+}
+
+.skill-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+.skill-name-simple {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
 .category-title {
     font-size: 1.3rem;
     font-weight: 600;
@@ -556,23 +594,6 @@ body:not([data-page="home"]) .section {
     transform: scale(1.1);
 }
 
-/* Legacy progress bar styling for backward compatibility */
-.proficiency-bar {
-    width: 60px;
-    height: 6px;
-    background: var(--hover-bg);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-left: 15px;
-}
-
-.proficiency-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--dark-blue), var(--accent-blue));
-    border-radius: 3px;
-    transition: width 1.5s ease-in-out;
-    width: 0;
-}
 
 /* Timeline */
 .timeline {
@@ -720,40 +741,6 @@ body:not([data-page="home"]) .section {
     margin-bottom: 50px;
 }
 
-/* Pulsing Data Points */
-.data-points {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.data-point {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: var(--light-blue);
-    border-radius: 50%;
-    animation: dataPointPulse 3s ease-in-out infinite;
-    box-shadow: 0 0 15px var(--light-blue);
-    z-index: 5;
-}
-
-@keyframes dataPointPulse {
-    0%, 100% { 
-        transform: scale(1); 
-        opacity: 0.4;
-    }
-    50% { 
-        transform: scale(1.5); 
-        opacity: 0.8;
-    }
-}
-
-.point-1 { top: 15%; left: 20%; animation-delay: 0s; }
-.point-2 { top: 70%; right: 20%; animation-delay: 1s; }
-.point-3 { top: 40%; left: 10%; animation-delay: 2s; }
-.point-4 { bottom: 30%; right: 30%; animation-delay: 1.5s; }
 
 /* Footer Styles */
 footer a:hover {
@@ -839,9 +826,6 @@ html {
         justify-content: center;
     }
     
-    #home .min-vh-100 {
-        min-height: auto !important;
-    }
     
     /* Tablet layout - image first */
     #home .row.align-items-center {
@@ -861,7 +845,7 @@ html {
     }
     
     .section {
-        padding: 70px 0 40px;
+        padding: 70px 0 70px;
     }
     
     .section-title {
@@ -879,7 +863,6 @@ html {
     /* Mobile Hero Section */
     #home {
         padding-top: 90px !important;
-        min-height: auto !important;
     }
     
     #home .container {
@@ -1023,7 +1006,7 @@ html {
     
     /* Mobile sections */
     .section {
-        padding: 60px 0 30px !important;
+        padding: 60px 0 60px !important;
     }
     
     .section-title {
@@ -1057,6 +1040,30 @@ html {
         font-size: 1.2rem;
     }
     
+    /* Mobile Simple Skill Cards */
+    .skill-card-simple {
+        padding: 15px 10px;
+        margin-bottom: 15px;
+        width: 110px;
+        height: 100px;
+    }
+    
+    .skill-icon-simple {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+        padding: 3px;
+    }
+    
+    .skill-image {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .skill-name-simple {
+        font-size: 0.9rem;
+    }
+    
     /* Mobile Timeline */
     .timeline {
         padding-left: 25px;
@@ -1079,6 +1086,30 @@ html {
     .container {
         padding-left: 15px;
         padding-right: 15px;
+    }
+    
+    /* Small Mobile Simple Skill Cards */
+    .skill-card-simple {
+        padding: 12px 8px;
+        margin-bottom: 12px;
+        width: 90px;
+        height: 85px;
+    }
+    
+    .skill-icon-simple {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 8px;
+        padding: 2px;
+    }
+    
+    .skill-image {
+        width: 31px;
+        height: 31px;
+    }
+    
+    .skill-name-simple {
+        font-size: 0.8rem;
     }
     
     .hero-content h1 {
@@ -1205,7 +1236,7 @@ html {
     background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
     color: var(--text-light);
     padding: 50px 0 30px;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .footer-title {
@@ -1320,12 +1351,6 @@ html {
     color: var(--text-gray);
 }
 
-/* Performance Optimizations */
-.card-custom, .project-card, .tool-card {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-}
 
 /* Accessibility Improvements */
 @media (prefers-reduced-motion: reduce) {
@@ -1356,19 +1381,3 @@ button:focus,
     outline-offset: 2px;
 }
 
-/* Skip to main content link for screen readers */
-.skip-to-main {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--accent-blue);
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    border-radius: 4px;
-    z-index: 9999;
-}
-
-.skip-to-main:focus {
-    top: 6px;
-}

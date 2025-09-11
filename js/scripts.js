@@ -1,18 +1,10 @@
-// Single-page scrolling navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize particles background
     initializeParticles();
-    
-    // Initialize single-page functionality
     initializeSinglePageNavigation();
-    
-    // Initialize common functionality
     initializeCommonFeatures();
 });
 
-// Initialize single-page navigation with smooth scrolling
 function initializeSinglePageNavigation() {
-    // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -27,7 +19,6 @@ function initializeSinglePageNavigation() {
         });
     });
 
-    // Update active navigation link based on scroll position
     function updateActiveNavLink() {
         const sections = document.querySelectorAll('.section');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -51,9 +42,7 @@ function initializeSinglePageNavigation() {
         });
     }
 
-    // Combined scroll event handler for navbar effects and active link updates
     window.addEventListener('scroll', function() {
-        // Update navbar background on scroll
         const navbar = document.querySelector('.navbar');
         if (navbar && window.scrollY > 50) {
             navbar.style.background = 'var(--navbar-bg-scroll)';
@@ -63,34 +52,24 @@ function initializeSinglePageNavigation() {
             navbar.style.boxShadow = '0 2px 20px var(--shadow-medium)';
         }
         
-        // Update active navigation link
         updateActiveNavLink();
     });
     
-    // Initialize active link on page load
     updateActiveNavLink();
 }
 
-// Initialize common features
 function initializeCommonFeatures() {
-    // Initialize page-specific features
     initializePageSpecificFeatures();
-    
-    // Initialize tooltips if available
     initializeTooltips();
 }
 
-// Initialize page-specific features for single-page website
 function initializePageSpecificFeatures() {
-    // Since we now have a single-page website, initialize all features
     initializeHomePage();
     initializeSkillsPage();
     initializeContactPage();
 }
 
-// Home page initialization
 function initializeHomePage() {
-    // Counter Animation for Hero Stats
     function animateCounters() {
         const counters = document.querySelectorAll('.hero-stats .stat-number');
         
@@ -112,19 +91,11 @@ function initializeHomePage() {
         });
     }
 
-    // Start counter animation when page loads
     setTimeout(animateCounters, 1000);
-    
-    // Add typing effect to hero title
-    setTimeout(typeWriter, 500);
-    
-    // Add dynamic glow effect to hero avatar
     addHeroGlow();
 }
 
-// Skills page initialization
 function initializeSkillsPage() {
-    // Animate skill proficiency segments
     const observerOptions = {
         threshold: 0.3
     };
@@ -155,16 +126,12 @@ function initializeSkillsPage() {
     }
 }
 
-// Contact page initialization
 function initializeContactPage() {
-
-    // Contact Form Handler
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Show success message
             const form = e.target;
             const button = form.querySelector('button[type="submit"]');
             const originalText = button.innerHTML;
@@ -172,13 +139,11 @@ function initializeContactPage() {
             button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
             button.disabled = true;
             
-            // Simulate form submission (replace with actual form handling)
             setTimeout(() => {
                 button.innerHTML = '<i class="bi bi-check-circle-fill"></i> Message Sent!';
                 button.classList.remove('btn-primary-custom');
                 button.classList.add('btn-success');
                 
-                // Reset form after 3 seconds
                 setTimeout(() => {
                     form.reset();
                     button.innerHTML = originalText;
@@ -191,31 +156,7 @@ function initializeContactPage() {
     }
 }
 
-// Utility Functions
 
-// Add typing effect to hero title
-function typeWriter() {
-    const text = "Business Analytics Professional";
-    const speed = 100;
-    let i = 0;
-    const element = document.querySelector('.hero-subtitle');
-    
-    if (element && !element.style.color) {
-        element.innerHTML = '';
-        
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            }
-        }
-        
-        type();
-    }
-}
-
-// Add dynamic glow effect to hero avatar
 function addHeroGlow() {
     const heroAvatar = document.querySelector('.hero-avatar');
     if (heroAvatar) {
@@ -234,7 +175,6 @@ function addHeroGlow() {
     }
 }
 
-// Initialize tooltips
 function initializeTooltips() {
     if (typeof bootstrap !== 'undefined') {
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -244,7 +184,6 @@ function initializeTooltips() {
     }
 }
 
-// Initialize Particles.js background
 function initializeParticles() {
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
@@ -347,8 +286,6 @@ function initializeParticles() {
             },
             retina_detect: true
         });
-    } else {
-        console.warn('Particles.js not loaded. Make sure to include the particles.js library.');
     }
 }
 
